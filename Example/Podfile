@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'RealmBrowser_Example' do
+  pod 'RealmBrowser', :path => '../'
+
+  target 'RealmBrowser_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
