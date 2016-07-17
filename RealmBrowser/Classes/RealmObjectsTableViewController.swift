@@ -15,6 +15,8 @@ final class RealmObjectsTableViewController: UITableViewController, UISearchBarD
   private var searchText = ""
   private var composedObject: Object?
   private var selectChild = false
+  private var showList = false
+  private var listObjects: [Object]?
   private var didSelectChildHandler: ((object: Object) -> Void)?
   
   private var searchedResults: [Object] {
@@ -68,6 +70,12 @@ final class RealmObjectsTableViewController: UITableViewController, UISearchBarD
     selectChild = true
     title = "Select \(property.name)"
     didSelectChildHandler = completionHandler
+  }
+  
+  func showList(property: Property, objects: [Object]) {
+    showList = true
+    title = property.name
+    listObjects = objects
   }
   
   @IBAction private func compose() {

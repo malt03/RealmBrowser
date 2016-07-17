@@ -254,7 +254,7 @@
                     </tableView>
                     <connections>
                         <outlet property="keyboardAccessoryView" destination="0hv-hR-c8n" id="8DT-rz-j9R"/>
-                        <segue destination="h6O-F2-pgJ" kind="show" identifier="selectChild" id="rHd-oR-rcH"/>
+                        <segue destination="h6O-F2-pgJ" kind="show" identifier="objects" id="rHd-oR-rcH"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PMz-Pf-33D" userLabel="First Responder" sceneMemberID="firstResponder"/>
