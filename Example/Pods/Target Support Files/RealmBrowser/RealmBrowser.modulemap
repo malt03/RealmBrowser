@@ -1,6 +1,0 @@
-framework module RealmBrowser {
-  umbrella header "RealmBrowser-umbrella.h"
-
-  export *
-  module * { export * }
-}
