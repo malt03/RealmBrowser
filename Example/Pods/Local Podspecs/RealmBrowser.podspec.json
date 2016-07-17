@@ -1,0 +1,32 @@
+{
+  "name": "RealmBrowser",
+  "version": "0.1.0",
+  "summary": "A short description of RealmBrowser.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/<GITHUB_USERNAME>/RealmBrowser",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "Koji Murata": "koji.murata@dena.com"
+  },
+  "source": {
+    "git": "https://github.com/<GITHUB_USERNAME>/RealmBrowser.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": "RealmBrowser/Classes/**/*",
+  "resource_bundles": {
+    "RealmBrowser": [
+      "RealmBrowser/Resources/*"
+    ]
+  },
+  "dependencies": {
+    "RealmSwift": [
+      "~> 1.0"
+    ]
+  }
+}

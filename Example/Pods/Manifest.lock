@@ -1,0 +1,24 @@
+PODS:
+  - Realm (1.0.2):
+    - Realm/Headers (= 1.0.2)
+  - Realm/Headers (1.0.2)
+  - RealmBrowser (0.1.0):
+    - RealmSwift (~> 1.0)
+  - RealmSwift (1.0.2):
+    - Realm (= 1.0.2)
+
+DEPENDENCIES:
+  - RealmBrowser (from `../`)
+
+EXTERNAL SOURCES:
+  RealmBrowser:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  Realm: 9d5c46a4d7d27958530a8dfc58f63a99e5c2cba3
+  RealmBrowser: 765c18723dcc846937b1c4148afe944f4a3c21f4
+  RealmSwift: 82f3ac5e24530143dddfde2033acc0d308f27d96
+
+PODFILE CHECKSUM: 7fba4ebdc4225f946b6893a48feb5af1427dcbc8
+
+COCOAPODS: 1.0.1

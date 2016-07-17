@@ -32,11 +32,11 @@ TODO: Add long description of the pod here.
 
   s.source_files = 'RealmBrowser/Classes/**/*'
   
-  # s.resource_bundles = {
-  #   'RealmBrowser' => ['RealmBrowser/Assets/*.png']
-  # }
+  s.resource_bundles = {
+    'RealmBrowser' => ['RealmBrowser/Resources/*']
+  }
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
+  s.dependency 'RealmSwift', '~> 1.0'
 end
