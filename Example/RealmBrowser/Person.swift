@@ -11,7 +11,7 @@ import RealmSwift
 
 class Person: Object {
   dynamic var name: String? = ""
-  dynamic var birthdate = NSDate(timeIntervalSince1970: 682095600)
+  dynamic var birthdate: NSDate? = NSDate(timeIntervalSince1970: 682095600)
   let piyo = RealmOptional<Bool>(false)
   dynamic var now = NSDate()
   dynamic var hoge = false

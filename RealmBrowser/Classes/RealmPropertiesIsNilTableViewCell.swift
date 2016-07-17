@@ -24,6 +24,10 @@ final class RealmPropertiesIsNilTableViewCell: UITableViewCell {
     nilSwitch.on = (object[property.name] != nil)
   }
   
+  func updateNil(isNotNil: Bool) {
+    nilSwitch.setOn(isNotNil, animated: true)
+  }
+  
   @IBAction private func nilChanged(sender: UISwitch) {
     didUpdateHandler(isNotNil: sender.on)
   }

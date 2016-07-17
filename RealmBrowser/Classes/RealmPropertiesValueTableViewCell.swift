@@ -15,23 +15,32 @@ final class RealmPropertiesValueTableViewCell: UITableViewCell {
   
   private var object: Object!
   private var property: Property!
+  private var valueDidChangeHandler: ((value: AnyObject?) -> Void)!
   
-  func prepare(object: Object, property: Property, keyboardAccessoryView: UIView) {
+  func prepare(object: Object, property: Property, keyboardAccessoryView: UIView, valueDidChangeHandler: ((value: AnyObject?) -> Void)) {
+    self.valueDidChangeHandler = valueDidChangeHandler
+    
+    valueTextField.inputAccessoryView = keyboardAccessoryView
+
+    updateValue(object, property: property)
+  }
+  
+  func updateValue(object: Object, property: Property) {
     accessoryType = .None
     userInteractionEnabled = true
     valueTextField.enabled = true
     valueTextField.hidden = false
     valueTextField.textColor = .blackColor()
+    valueTextField.placeholder = "value"
     valueSwitch.enabled = true
     valueSwitch.hidden = true
     
     self.object = object
     self.property = property
     
-    let value = object[property.name]
-    
-    valueTextField.inputAccessoryView = keyboardAccessoryView
     valueTextField.text = object.valueText(property)
+
+    let value = object[property.name]
     
     switch property.type {
     case .Any, .Array, .Data, .Date, .LinkingObjects:
@@ -52,11 +61,16 @@ final class RealmPropertiesValueTableViewCell: UITableViewCell {
       valueTextField.keyboardType = .Default
     }
     
-    if object.objectSchema.primaryKeyProperty == property || value == nil {
+    if object.objectSchema.primaryKeyProperty == property {
       valueTextField.enabled = false
       valueSwitch.enabled = false
       valueTextField.textColor = .lightGrayColor()
       userInteractionEnabled = false
+    }
+    
+    if value == nil {
+      valueTextField.text = ""
+      valueTextField.placeholder = "nil"
     }
   }
   
@@ -95,5 +109,6 @@ final class RealmPropertiesValueTableViewCell: UITableViewCell {
     try! Realm().write {
       object.setValue(value, forKeyPath: property.name)
     }
+    valueDidChangeHandler(value: value)
   }
 }
