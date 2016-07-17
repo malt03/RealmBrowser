@@ -21,7 +21,6 @@ final class RealmPropertiesTableViewController: UITableViewController {
   }
   
   private var changeNotNilProperty: Property?
-  private var listProperty: Property?
   private var object: Object!
   private var properties: [Property] {
     return object.objectSchema.properties
@@ -57,10 +56,9 @@ final class RealmPropertiesTableViewController: UITableViewController {
       vc.prepare(object[property.name] as! Object)
       navigationController?.pushViewController(vc, animated: true)
       return
-    case .Array:
-      listProperty = property
-      performSegueWithIdentifier("objects", sender: nil)
-    case .Any, .Data, .Date, .LinkingObjects:
+    case .Date:
+      break
+    case .Any, .Array, .Data, .LinkingObjects:
       break
     }
     tableView.deselectRowAtIndexPath(indexPath, animated: true)
@@ -115,7 +113,7 @@ final class RealmPropertiesTableViewController: UITableViewController {
       case .String: value = ""
       case .Object:
         changeNotNilProperty = property
-        performSegueWithIdentifier("objects", sender: nil)
+        performSegueWithIdentifier("selectChild", sender: nil)
         return
       default: return
       }
@@ -132,29 +130,21 @@ final class RealmPropertiesTableViewController: UITableViewController {
   }
   
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    if let vc = segue.destinationViewController as? RealmObjectsTableViewController {
-      guard let property = changeNotNilProperty ?? listProperty else { return }
-      let className = property.objectClassName
-
+    if let vc = segue.destinationViewController as? RealmObjectsTableViewController,
+      property = changeNotNilProperty,
+      className = property.objectClassName
+    {
       for schema in try! Realm().schema.objectSchema {
         if schema.className == className {
           vc.prepare(schema)
-          
-          if changeNotNilProperty != nil {
-            vc.selectChild(property) { [weak self] (object) in
-              guard let s = self else { return }
-              try! Realm().write {
-                s.object.setValue(object, forKeyPath: property.name)
-              }
+          vc.selectChild(property) { [weak self] (object) in
+            guard let s = self else { return }
+            try! Realm().write {
+              s.object.setValue(object, forKeyPath: property.name)
             }
-          } else {
-            
           }
         }
       }
-      
-      changeNotNilProperty = nil
-      listProperty = nil
     }
   }
 }
