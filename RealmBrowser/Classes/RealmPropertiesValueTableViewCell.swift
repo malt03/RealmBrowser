@@ -17,21 +17,21 @@ final class RealmPropertiesValueTableViewCell: UITableViewCell {
   private var property: Property!
   private var valueDidChangeHandler: ((value: AnyObject?) -> Void)!
   
-  func prepare(object: Object, property: Property, keyboardAccessoryView: UIView, valueDidChangeHandler: ((value: AnyObject?) -> Void)) {
+  func prepare(object: Object, property: Property, composed: Bool, keyboardAccessoryView: UIView, valueDidChangeHandler: ((value: AnyObject?) -> Void)) {
     self.valueDidChangeHandler = valueDidChangeHandler
     
     valueTextField.inputAccessoryView = keyboardAccessoryView
 
-    updateValue(object, property: property)
+    updateValue(object, property: property, composed: composed)
   }
   
-  func updateValue(object: Object, property: Property) {
+  func updateValue(object: Object, property: Property, composed: Bool) {
     accessoryType = .None
     userInteractionEnabled = true
     valueTextField.enabled = true
     valueTextField.hidden = false
     valueTextField.textColor = .blackColor()
-    valueTextField.attributedPlaceholder = NSAttributedString(string: "value", attributes: [
+    valueTextField.attributedPlaceholder = NSAttributedString(string: "input value", attributes: [
       NSForegroundColorAttributeName: UIColor.lightGrayColor()
     ])
 
@@ -64,7 +64,7 @@ final class RealmPropertiesValueTableViewCell: UITableViewCell {
       valueTextField.keyboardType = .Default
     }
     
-    if object.objectSchema.primaryKeyProperty == property {
+    if object.objectSchema.primaryKeyProperty == property && !composed {
       valueTextField.enabled = false
       valueSwitch.enabled = false
       valueTextField.textColor = .lightGrayColor()
@@ -74,7 +74,7 @@ final class RealmPropertiesValueTableViewCell: UITableViewCell {
     if value == nil {
       valueTextField.text = ""
       valueTextField.attributedPlaceholder = NSAttributedString(string: "nil", attributes: [
-        NSForegroundColorAttributeName: UIColor.redColor()
+        NSForegroundColorAttributeName: UIColor.redColor().colorWithAlphaComponent(0.5)
       ])
     }
   }
@@ -88,7 +88,7 @@ final class RealmPropertiesValueTableViewCell: UITableViewCell {
   }
   
   @IBAction func valueDidChange(sender: UITextField) {
-    valueTextField.attributedPlaceholder = NSAttributedString(string: "value", attributes: [
+    valueTextField.attributedPlaceholder = NSAttributedString(string: "input value", attributes: [
       NSForegroundColorAttributeName: UIColor.lightGrayColor()
     ])
     let text = sender.text ?? ""

@@ -46,6 +46,13 @@ final class RealmObjectsTableViewController: UITableViewController, UISearchBarD
   override func viewWillAppear(animated: Bool) {
     if let indexPath = tableView.indexPathForSelectedRow, cell = tableView.cellForRowAtIndexPath(indexPath) as? RealmObjectsTableViewCell {
       cell.prepare(object(indexPath))
+    } else if let c = composedObject {
+      let realm = try! Realm()
+      try! realm.write {
+        realm.add(c)
+        composedObject = nil
+        tableView.reloadData()
+      }
     }
     super.viewWillAppear(animated)
   }
@@ -72,21 +79,15 @@ final class RealmObjectsTableViewController: UITableViewController, UISearchBarD
   
   @IBAction private func compose() {
     let klass = NSClassFromString(RealmBrowser.moduleName + "." + objectSchema.className) as! Object.Type
-    let o = klass.init()
-    let realm = try! Realm()
-    try! realm.write {
-      realm.add(o)
-    }
-    composedObject = o
+    composedObject = klass.init()
     performSegueWithIdentifier("showObject", sender: nil)
-    tableView.reloadData()
   }
   
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
     if let vc = segue.destinationViewController as? RealmPropertiesTableViewController {
       let editObject: Object
       guard let o = (tableView.indexPathForSelectedRow.map { self.object($0) } ?? composedObject) else { return }
-      vc.prepare(o)
+      vc.prepare(o, composed: composedObject != nil)
     }
   }
   

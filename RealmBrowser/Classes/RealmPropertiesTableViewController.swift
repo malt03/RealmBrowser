@@ -16,13 +16,14 @@ final class RealmPropertiesTableViewController: UITableViewController {
     view.endEditing(true)
   }
   
-  override func scrollViewDidScroll(scrollView: UIScrollView) {
+  override func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
     view.endEditing(true)
   }
   
   private var changeNotNilProperty: Property?
   private var object: Object!
   private var showDatePickerSections = Set<Int>()
+  private var composed = false
   private var properties: [Property] {
     return object.objectSchema.properties
   }
@@ -32,7 +33,8 @@ final class RealmPropertiesTableViewController: UITableViewController {
     return properties[indexPath.section]
   }
   
-  func prepare(object: Object) {
+  func prepare(object: Object, composed: Bool) {
+    self.composed = composed
     self.object = object
     title = object.primaryValueText
   }
@@ -55,7 +57,7 @@ final class RealmPropertiesTableViewController: UITableViewController {
     case .Object:
       if let value = object[property.name] as? Object {
         let vc = storyboard?.instantiateViewControllerWithIdentifier("RealmPropertiesTableViewController") as! RealmPropertiesTableViewController
-        vc.prepare(value)
+        vc.prepare(value, composed: false)
         navigationController?.pushViewController(vc, animated: true)
         return
       }
@@ -92,7 +94,7 @@ final class RealmPropertiesTableViewController: UITableViewController {
     switch indexPath.row {
     case 0:
       let cell = tableView.dequeueReusableCellWithIdentifier("value", forIndexPath: indexPath) as! RealmPropertiesValueTableViewCell
-      cell.prepare(object, property: property, keyboardAccessoryView: keyboardAccessoryView) { [weak self] (value) in
+      cell.prepare(object, property: property, composed: composed, keyboardAccessoryView: keyboardAccessoryView) { [weak self] (value) in
         guard let s = self,
           cellForNil = s.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 1, inSection: indexPath.section)) as? RealmPropertiesIsNilTableViewCell ??
             s.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 2, inSection: indexPath.section)) as? RealmPropertiesIsNilTableViewCell else
@@ -136,7 +138,7 @@ final class RealmPropertiesTableViewController: UITableViewController {
     cell.prepare(object, property: property) { [weak self] in
       guard let s = self else { return }
       guard let cellForValue = s.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: indexPath.section)) as? RealmPropertiesValueTableViewCell else { return }
-      cellForValue.updateValue(s.object, property: property)
+      cellForValue.updateValue(s.object, property: property, composed: s.composed)
       
       if let cellForNil = s.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 2, inSection: indexPath.section)) as? RealmPropertiesIsNilTableViewCell {
         cellForNil.updateNil(true)
@@ -175,7 +177,7 @@ final class RealmPropertiesTableViewController: UITableViewController {
     }
     
     let cell = tableView.cellForRowAtIndexPath(indexPath) as! RealmPropertiesValueTableViewCell
-    cell.updateValue(object, property: property)
+    cell.updateValue(object, property: property, composed: composed)
   }
   
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
