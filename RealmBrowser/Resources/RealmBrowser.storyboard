@@ -138,13 +138,13 @@
         <scene sceneID="AwO-kM-u3g">
             <objects>
                 <tableViewController storyboardIdentifier="RealmPropertiesTableViewController" id="JVI-wu-PsK" customClass="RealmPropertiesTableViewController" customModule="RealmBrowser" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="jcQ-8B-oLL">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="jcQ-8B-oLL">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="value" id="gGM-1r-cd8" customClass="RealmPropertiesValueTableViewCell" customModule="RealmBrowser" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="50" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gGM-1r-cd8" id="WKF-VM-0R3">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
@@ -189,7 +189,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="isNil" id="sqH-lD-J8Z" customClass="RealmPropertiesIsNilTableViewCell" customModule="RealmBrowser" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="72" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="94" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="sqH-lD-J8Z" id="j2a-BG-u5C">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
@@ -221,7 +221,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="datePicker" rowHeight="217" id="ZHZ-8d-ABg" customClass="DatePickingTableViewCell" customModule="RealmBrowser" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="116" width="600" height="217"/>
+                                <rect key="frame" x="0.0" y="138" width="600" height="217"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZHZ-8d-ABg" id="yLf-60-wk0">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="216"/>
@@ -247,6 +247,14 @@
                                 <connections>
                                     <outlet property="datePicker" destination="3em-kj-CBp" id="Dmc-RD-52w"/>
                                 </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="Iue-PX-3cg">
+                                <rect key="frame" x="0.0" y="355" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Iue-PX-3cg" id="495-HP-Uh5">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>
                         <connections>
