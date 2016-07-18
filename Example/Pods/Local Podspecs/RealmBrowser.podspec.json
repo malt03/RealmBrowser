@@ -1,9 +1,9 @@
 {
   "name": "RealmBrowser",
   "version": "0.1.0",
-  "summary": "A short description of RealmBrowser.",
-  "description": "TODO: Add long description of the pod here.",
-  "homepage": "https://github.com/<GITHUB_USERNAME>/RealmBrowser",
+  "summary": "RealmBrowser is a Realm browser and editor which you can use in your ios application.",
+  "description": "If you are using RealmSwift, you can browse and edit Realm database on this pod.",
+  "homepage": "https://github.com/malt03/RealmBrowser",
   "license": {
     "type": "MIT",
     "file": "LICENSE"
@@ -12,7 +12,7 @@
     "Koji Murata": "koji.murata@dena.com"
   },
   "source": {
-    "git": "https://github.com/<GITHUB_USERNAME>/RealmBrowser.git",
+    "git": "https://github.com/malt03/RealmBrowser.git",
     "tag": "0.1.0"
   },
   "platforms": {

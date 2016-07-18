@@ -36,7 +36,7 @@ final class RealmPropertiesTableViewController: UITableViewController {
   func prepare(object: Object, composed: Bool) {
     self.composed = composed
     self.object = object
-    title = object.primaryValueText
+    title = composed ? "Compose \(object.objectSchema.className)" : object.primaryValueText
   }
   
   override func viewWillAppear(animated: Bool) {
