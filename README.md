@@ -1,9 +1,9 @@
 # RealmBrowser
 
-[![CI Status](http://img.shields.io/travis/Koji Murata/RealmBrowser.svg?style=flat)](https://travis-ci.org/Koji Murata/RealmBrowser)
-[![Version](https://img.shields.io/cocoapods/v/RealmBrowser.svg?style=flat)](http://cocoapods.org/pods/RealmBrowser)
-[![License](https://img.shields.io/cocoapods/l/RealmBrowser.svg?style=flat)](http://cocoapods.org/pods/RealmBrowser)
 [![Platform](https://img.shields.io/cocoapods/p/RealmBrowser.svg?style=flat)](http://cocoapods.org/pods/RealmBrowser)
+![Language](https://img.shields.io/badge/language-Swift%202.2-orange.svg)
+[![CocoaPods](https://img.shields.io/cocoapods/v/RealmBrowser.svg?style=flat)](http://cocoapods.org/pods/RealmBrowser)
+![License](https://img.shields.io/github/license/malt03/RealmBrowser.svg?style=flat)
 
 ## Example
 
