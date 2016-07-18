@@ -31,7 +31,10 @@ final class RealmPropertiesValueTableViewCell: UITableViewCell {
     valueTextField.enabled = true
     valueTextField.hidden = false
     valueTextField.textColor = .blackColor()
-    valueTextField.placeholder = "value"
+    valueTextField.attributedPlaceholder = NSAttributedString(string: "value", attributes: [
+      NSForegroundColorAttributeName: UIColor.lightGrayColor()
+    ])
+
     valueSwitch.enabled = true
     valueSwitch.hidden = true
     
@@ -70,7 +73,9 @@ final class RealmPropertiesValueTableViewCell: UITableViewCell {
     
     if value == nil {
       valueTextField.text = ""
-      valueTextField.placeholder = "nil"
+      valueTextField.attributedPlaceholder = NSAttributedString(string: "nil", attributes: [
+        NSForegroundColorAttributeName: UIColor.redColor()
+      ])
     }
   }
   
@@ -83,6 +88,9 @@ final class RealmPropertiesValueTableViewCell: UITableViewCell {
   }
   
   @IBAction func valueDidChange(sender: UITextField) {
+    valueTextField.attributedPlaceholder = NSAttributedString(string: "value", attributes: [
+      NSForegroundColorAttributeName: UIColor.lightGrayColor()
+    ])
     let text = sender.text ?? ""
     let value: AnyObject?
     switch property.type {
