@@ -18,7 +18,6 @@ final class RealmObjectsTableViewController: UITableViewController, UISearchBarD
   private var didSelectChildHandler: ((object: Object) -> Void)?
   
   private var searchedResults: [Object] {
-    let lower = searchText.lowercaseString
     var objects = [Object]()
     
     if searchText == "" {
@@ -85,7 +84,6 @@ final class RealmObjectsTableViewController: UITableViewController, UISearchBarD
   
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
     if let vc = segue.destinationViewController as? RealmPropertiesTableViewController {
-      let editObject: Object
       guard let o = (tableView.indexPathForSelectedRow.map { self.object($0) } ?? composedObject) else { return }
       vc.prepare(o, composed: composedObject != nil)
     }
