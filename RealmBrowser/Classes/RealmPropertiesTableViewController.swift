@@ -22,6 +22,7 @@ final class RealmPropertiesTableViewController: UITableViewController {
   
   private var changeNotNilProperty: Property?
   private var object: Object!
+  private var showDatePickerSections = Set<Int>()
   private var properties: [Property] {
     return object.objectSchema.properties
   }
@@ -59,7 +60,14 @@ final class RealmPropertiesTableViewController: UITableViewController {
         return
       }
     case .Date:
-      break
+      let dateIndexPath = NSIndexPath(forRow: 1, inSection: indexPath.section)
+      if showDatePickerSections.contains(indexPath.section) {
+        showDatePickerSections.remove(indexPath.section)
+        tableView.deleteRowsAtIndexPaths([dateIndexPath], withRowAnimation: .Fade)
+      } else {
+        showDatePickerSections.insert(indexPath.section)
+        tableView.insertRowsAtIndexPaths([dateIndexPath], withRowAnimation: .Fade)
+      }
     case .Any, .Array, .Data, .LinkingObjects:
       break
     }
@@ -75,7 +83,7 @@ final class RealmPropertiesTableViewController: UITableViewController {
   }
   
   override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return 1 + (properties[section].optional ? 1 : 0) + (properties[section].type == .Date ? 1 : 0)
+    return 1 + (properties[section].optional ? 1 : 0) + (showDatePickerSections.contains(section) ? 1 : 0)
   }
   
   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -95,7 +103,7 @@ final class RealmPropertiesTableViewController: UITableViewController {
       }
       return cell
     case 1:
-      if property.type == .Date {
+      if showDatePickerSections.contains(indexPath.section) {
         return createDateCell(indexPath, property: property)
       }
       return createIsNilCell(indexPath, property: property)
