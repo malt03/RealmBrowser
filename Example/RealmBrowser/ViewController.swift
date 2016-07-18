@@ -13,6 +13,6 @@ import RealmBrowser
 class ViewController: UIViewController {
   override func viewDidAppear(animated: Bool) {
     super.viewDidAppear(animated)
-    presentViewController(RealmBrowser.instantiate("RealmBrowser_Example"), animated: true, completion: nil)
+    presentViewController(RealmBrowser.instantiate(moduleName: "RealmBrowser_Example"), animated: true, completion: nil)
   }
 }

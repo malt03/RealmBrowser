@@ -9,7 +9,11 @@
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
-## Requirements
+## Usage
+
+```swift
+presentViewController(RealmBrowser.instantiate(moduleName: "RealmBrowser_Example"), animated: true, completion: nil)
+```
 
 ## Installation
 

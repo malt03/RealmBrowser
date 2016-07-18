@@ -13,7 +13,7 @@ public final class RealmBrowser {
   static var moduleName = ""
   static var objectSearchEnabled = true
   
-  public static func instantiate(moduleName: String, withNavigationController: Bool = true, objectSearchEnabled: Bool = true) -> UIViewController {
+  public static func instantiate(moduleName moduleName: String, withNavigationController: Bool = true, objectSearchEnabled: Bool = true) -> UIViewController {
     RealmBrowser.moduleName = moduleName
     RealmBrowser.objectSearchEnabled = objectSearchEnabled
     
