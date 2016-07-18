@@ -3,7 +3,7 @@ PODS:
     - Realm/Headers (= 1.0.2)
   - Realm/Headers (1.0.2)
   - RealmBrowser (0.1.0):
-    - RealmSwift (~> 1.0)
+    - RealmSwift
   - RealmSwift (1.0.2):
     - Realm (= 1.0.2)
 
@@ -16,7 +16,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Realm: 9d5c46a4d7d27958530a8dfc58f63a99e5c2cba3
-  RealmBrowser: 2b265054ae89f02813669442806fe0be34c909ed
+  RealmBrowser: 6296990f19d4c7a1f142df5e4d8080b18a7e5866
   RealmSwift: 82f3ac5e24530143dddfde2033acc0d308f27d96
 
 PODFILE CHECKSUM: 7fba4ebdc4225f946b6893a48feb5af1427dcbc8

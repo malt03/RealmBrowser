@@ -29,5 +29,5 @@ If you are using RealmSwift, you can browse and edit Realm database on this pod.
     'RealmBrowser' => ['RealmBrowser/Resources/*']
   }
 
-  s.dependency 'RealmSwift', '~> 1.0'
+  s.dependency 'RealmSwift'
 end

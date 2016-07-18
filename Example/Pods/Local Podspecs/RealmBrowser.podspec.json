@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "RealmSwift": [
-      "~> 1.0"
+
     ]
   }
 }
