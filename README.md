@@ -17,6 +17,17 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 presentViewController(RealmBrowser.instantiate(moduleName: "RealmBrowser_Example"), animated: true, completion: nil)
 ```
 
+### with [DebugHead](https://cocoapods.org/pods/DebugHead)
+Use [DebugMenuRealmBrowser](https://cocoapods.org/pods/DebugMenuRealmBrowser).
+
+```swift
+func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+  DebugMenuRealmBrowserViewController.prepare(moduleName: "<module name>")
+  DebugHead.sharedInstance.prepare(menuClasses: [DebugMenuRealmBrowserViewController.self])
+  return true
+}
+```
+
 ## Installation
 
 RealmBrowser is available through [CocoaPods](http://cocoapods.org). To install
