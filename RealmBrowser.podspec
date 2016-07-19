@@ -16,7 +16,7 @@ If you are using RealmSwift, you can browse and edit Realm database on this pod.
                        DESC
 
   s.homepage         = 'https://github.com/malt03/RealmBrowser'
-  s.screenshots      = 'https://github.com/malt03/DebugMenuRealmBrowser/blob/master/Screenshot.gif?raw=true'
+  s.screenshots      = 'https://raw.githubusercontent.com/malt03/DebugMenuRealmBrowser/master/Screenshot.gif'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'Koji Murata' => 'malt.koji@gmail.com' }
   s.source           = { :git => 'https://github.com/malt03/RealmBrowser.git', :tag => s.version.to_s }
