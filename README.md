@@ -5,6 +5,8 @@
 [![CocoaPods](https://img.shields.io/cocoapods/v/RealmBrowser.svg?style=flat)](http://cocoapods.org/pods/RealmBrowser)
 ![License](https://img.shields.io/github/license/malt03/RealmBrowser.svg?style=flat)
 
+![Screenshot](https://github.com/malt03/DebugMenuRealmBrowser/blob/master/Screenshot.gif?raw=true)
+
 ## Example
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
