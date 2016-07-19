@@ -78,7 +78,7 @@ final class RealmObjectsTableViewController: UITableViewController, UISearchBarD
   
   @IBAction private func compose() {
     guard let klass = NSClassFromString(RealmBrowser.moduleName + "." + objectSchema.className) as? Object.Type else {
-      let alert = UIAlertController(title: "Error", message: "The module name \"\(RealmBrowser.moduleName)\" is incorrect.", preferredStyle: .Alert)
+      let alert = UIAlertController(title: "Error", message: RealmBrowser.incorrectModuleNameMessage, preferredStyle: .Alert)
       alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
       presentViewController(alert, animated: true, completion: nil)
       return
