@@ -77,7 +77,7 @@ final class RealmPropertiesTableViewController: UITableViewController {
   }
   
   override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-    return properties[section].name
+    return try! properties[section].name.snakeCaseString.stringByReplacing("_") { _ in " " }
   }
   
   override func numberOfSectionsInTableView(tableView: UITableView) -> Int {

@@ -146,6 +146,7 @@
 		E7A9E22AE6EE4F9621497A0596F8FB37 /* RLMObject_Private.h in Copy . Private Headers */ = {isa = PBXBuildFile; fileRef = 254567104F850E3887986774D37860D4 /* RLMObject_Private.h */; };
 		E84EA1AACA2E7546EB5A1AAC90662AEB /* RLMArrayLinkView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 71337C1B7669C00D1024027240671D18 /* RLMArrayLinkView.mm */; settings = {COMPILER_FLAGS = "-DREALM_HAVE_CONFIG -DREALM_COCOA_VERSION='@\"1.0.2\"' -D__ASSERTMACROS__"; }; };
 		EC5F4379B8D44DB70DD6DE1DBBB88B2D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6AEB7570902261E18F29FEC1B24CEF0 /* Foundation.framework */; };
+		ED555BE91D3E064F00F955D5 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED555BE71D3E064700F955D5 /* String+Extensions.swift */; };
 		EF5773B8E2AD6BA3C178ECC49B7E10FB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6AEB7570902261E18F29FEC1B24CEF0 /* Foundation.framework */; };
 		F2657AF9F3536FA5692F036C14F3EFB1 /* Results.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945CB3C30C11A2491E1B17CEA441FF6A /* Results.swift */; };
 		F853846FCDC19FAFABADFFF096B104C1 /* Object+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A65EAA2F406894009F5CE577408DB913 /* Object+Extensions.swift */; };
@@ -392,6 +393,7 @@
 		E824E174051BDBA586C37DDDA739C58B /* Pods-RealmBrowser_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-RealmBrowser_Example-dummy.m"; sourceTree = "<group>"; };
 		E868CC593933495CB31FBF7425291781 /* RLMObjectSchema.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RLMObjectSchema.h; path = include/RLMObjectSchema.h; sourceTree = "<group>"; };
 		EAF29BF653C4D2D35E0A30DB7ECF8F8A /* RLMMigration.mm */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.objcpp; name = RLMMigration.mm; path = Realm/RLMMigration.mm; sourceTree = "<group>"; };
+		ED555BE71D3E064700F955D5 /* String+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		ED9AAF0EA67C0E406EA538E7CFA49D72 /* collection_change_builder.cpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = collection_change_builder.cpp; path = Realm/ObjectStore/impl/collection_change_builder.cpp; sourceTree = "<group>"; };
 		EE35214CF1E03869A03092972CB2EBA9 /* RealmObjectsTableViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RealmObjectsTableViewController.swift; sourceTree = "<group>"; };
 		EF8942A7F340726021EFBD6BCDAD76F7 /* Optional.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Optional.swift; path = RealmSwift/Optional.swift; sourceTree = "<group>"; };
@@ -548,6 +550,7 @@
 				C84CA603F46916029DBD00A755A742BD /* RealmPropertiesTableViewController.swift */,
 				0A02A276E93102027A12D6A488E7985A /* RealmPropertiesValueTableViewCell.swift */,
 				BF8DE472043438947FF325868A63E53C /* RealmSchemaTableViewController.swift */,
+				ED555BE71D3E064700F955D5 /* String+Extensions.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -1083,6 +1086,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				010FC69E8E54B3B5B68A8F67C61D9A08 /* DatePickingTableViewCell.swift in Sources */,
+				ED555BE91D3E064F00F955D5 /* String+Extensions.swift in Sources */,
 				F853846FCDC19FAFABADFFF096B104C1 /* Object+Extensions.swift in Sources */,
 				7BD12C489E454EE3B2489C50E12D0F38 /* RealmBrowser-dummy.m in Sources */,
 				080D4FDE0800F399486301284F474EBA /* RealmBrowser.swift in Sources */,
@@ -1340,6 +1344,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A4943452CA5E1DB61AE688D6B8B1E9A2 /* Pods-RealmBrowser_Example.release.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -1553,6 +1558,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FB4D1F7A6074E209855FAC7178034ECA /* Pods-RealmBrowser_Example.debug.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;

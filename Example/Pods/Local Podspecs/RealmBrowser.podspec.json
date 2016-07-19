@@ -1,7 +1,7 @@
 {
   "name": "RealmBrowser",
-  "version": "0.1.0",
-  "summary": "RealmBrowser is a Realm browser and editor which you can use in your ios application.",
+  "version": "0.1.1",
+  "summary": "RealmBrowser is a Realm browser and editor on ios applications.",
   "description": "If you are using RealmSwift, you can browse and edit Realm database on this pod.",
   "homepage": "https://github.com/malt03/RealmBrowser",
   "license": {
@@ -13,7 +13,7 @@
   },
   "source": {
     "git": "https://github.com/malt03/RealmBrowser.git",
-    "tag": "0.1.0"
+    "tag": "0.1.1"
   },
   "platforms": {
     "ios": "8.0"
