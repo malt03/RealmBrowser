@@ -138,7 +138,7 @@ final class RealmPropertiesTableViewController: UITableViewController {
     cell.prepare(object, property: property) { [weak self] in
       guard let s = self else { return }
       guard let cellForValue = s.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: indexPath.section)) as? RealmPropertiesValueTableViewCell else { return }
-      cellForValue.updateValue(s.object, property: property, composed: s.composed)
+      cellForValue.updateValue(s.object, property: property, composed: s.composed, animated: true)
       
       if let cellForNil = s.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 2, inSection: indexPath.section)) as? RealmPropertiesIsNilTableViewCell {
         cellForNil.updateNil(true)
@@ -177,7 +177,7 @@ final class RealmPropertiesTableViewController: UITableViewController {
     }
     
     let cell = tableView.cellForRowAtIndexPath(indexPath) as! RealmPropertiesValueTableViewCell
-    cell.updateValue(object, property: property, composed: composed)
+    cell.updateValue(object, property: property, composed: composed, animated: true)
   }
   
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

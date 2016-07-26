@@ -53,6 +53,9 @@ final class RealmObjectsTableViewController: UITableViewController, UISearchBarD
         tableView.reloadData()
       }
     }
+    if let selected = tableView.indexPathForSelectedRow {
+      tableView.deselectRowAtIndexPath(selected, animated: true)
+    }
     super.viewWillAppear(animated)
   }
   

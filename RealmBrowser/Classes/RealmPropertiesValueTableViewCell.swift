@@ -22,10 +22,10 @@ final class RealmPropertiesValueTableViewCell: UITableViewCell {
     
     valueTextField.inputAccessoryView = keyboardAccessoryView
 
-    updateValue(object, property: property, composed: composed)
+    updateValue(object, property: property, composed: composed, animated: false)
   }
   
-  func updateValue(object: Object, property: Property, composed: Bool) {
+  func updateValue(object: Object, property: Property, composed: Bool, animated: Bool) {
     accessoryType = .None
     userInteractionEnabled = true
     valueTextField.enabled = true
@@ -52,7 +52,7 @@ final class RealmPropertiesValueTableViewCell: UITableViewCell {
       valueTextField.enabled = false
       accessoryType = .DisclosureIndicator
     case .Bool:
-      valueSwitch.setOn(value as? Bool ?? false, animated: true)
+      valueSwitch.setOn(value as? Bool ?? false, animated: animated)
       valueTextField.enabled = false
       valueTextField.hidden = true
       valueSwitch.hidden = false
