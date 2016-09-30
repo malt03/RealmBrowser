@@ -10,12 +10,12 @@ import UIKit
 import RealmSwift
 
 final class RealmPropertiesValueTableViewCell: UITableViewCell {
-  @IBOutlet fileprivate weak var valueTextField: UITextField!
-  @IBOutlet fileprivate weak var valueSwitch: UISwitch!
+  @IBOutlet private weak var valueTextField: UITextField!
+  @IBOutlet private weak var valueSwitch: UISwitch!
   
-  fileprivate var object: Object!
-  fileprivate var property: Property!
-  fileprivate var valueDidChangeHandler: ((_ value: AnyObject?) -> Void)!
+  private var object: Object!
+  private var property: Property!
+  private var valueDidChangeHandler: ((_ value: AnyObject?) -> Void)!
   
   func prepare(_ object: Object, property: Property, composed: Bool, keyboardAccessoryView: UIView, valueDidChangeHandler: @escaping ((_ value: AnyObject?) -> Void)) {
     self.valueDidChangeHandler = valueDidChangeHandler
@@ -113,7 +113,7 @@ final class RealmPropertiesValueTableViewCell: UITableViewCell {
     update(sender.isOn as AnyObject)
   }
   
-  fileprivate func update(_ value: AnyObject) {
+  private func update(_ value: AnyObject) {
     try! Realm().write {
       object.setValue(value, forKeyPath: property.name)
     }

@@ -16,14 +16,14 @@ final class RealmSchemaTableViewController: UITableViewController, UISearchBarDe
     }
   }
   
-  @objc fileprivate func dismiss() {
+  @objc private func dismiss() {
     self.dismiss(animated: true, completion: nil)
   }
   
-  fileprivate let objectSchemas = try! Realm().schema.objectSchema.sorted { $0.className < $1.className }
-  fileprivate var searchText = ""
+  private let objectSchemas = try! Realm().schema.objectSchema.sorted { $0.className < $1.className }
+  private var searchText = ""
   
-  fileprivate var searchedObjectSchemas: [ObjectSchema] {
+  private var searchedObjectSchemas: [ObjectSchema] {
     if searchText == "" { return objectSchemas }
     let lower = searchText.lowercased()
     return objectSchemas.filter {

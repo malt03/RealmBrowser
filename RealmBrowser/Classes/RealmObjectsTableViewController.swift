@@ -10,14 +10,14 @@ import UIKit
 import RealmSwift
 
 final class RealmObjectsTableViewController: UITableViewController, UISearchBarDelegate {
-  fileprivate var objectSchema: ObjectSchema!
-  fileprivate var results: Results<DynamicObject>!
-  fileprivate var searchText = ""
-  fileprivate var composedObject: Object?
-  fileprivate var selectChild = false
-  fileprivate var didSelectChildHandler: ((_ object: Object) -> Void)?
+  private var objectSchema: ObjectSchema!
+  private var results: Results<DynamicObject>!
+  private var searchText = ""
+  private var composedObject: Object?
+  private var selectChild = false
+  private var didSelectChildHandler: ((_ object: Object) -> Void)?
   
-  fileprivate var searchedResults: [Object] {
+  private var searchedResults: [Object] {
     var objects = [Object]()
     
     if searchText == "" {
@@ -38,7 +38,7 @@ final class RealmObjectsTableViewController: UITableViewController, UISearchBarD
     return objects
   }
   
-  fileprivate func object(_ indexPath: IndexPath) -> Object {
+  private func object(_ indexPath: IndexPath) -> Object {
     return RealmBrowser.objectSearchEnabled ? searchedResults[indexPath.row] : results[indexPath.row]
   }
   
@@ -79,7 +79,7 @@ final class RealmObjectsTableViewController: UITableViewController, UISearchBarD
     didSelectChildHandler = completionHandler
   }
   
-  @IBAction fileprivate func compose() {
+  @IBAction private func compose() {
     guard let klass = NSClassFromString(RealmBrowser.moduleName + "." + objectSchema.className) as? Object.Type else {
       let alert = UIAlertController(title: "Error", message: "The module name \"\(RealmBrowser.moduleName)\" is incorrect. " + RealmBrowser.incorrectModuleNameMessage, preferredStyle: .alert)
       alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))

@@ -10,10 +10,10 @@ import UIKit
 import RealmSwift
 
 final class RealmPropertiesIsNilTableViewCell: UITableViewCell {
-  @IBOutlet fileprivate weak var nilSwitch: UISwitch!
-  fileprivate var object: Object!
-  fileprivate var property: Property!
-  fileprivate var didUpdateHandler: ((_ isNotNil: Bool) -> Void)!
+  @IBOutlet private weak var nilSwitch: UISwitch!
+  private var object: Object!
+  private var property: Property!
+  private var didUpdateHandler: ((_ isNotNil: Bool) -> Void)!
   
   func prepare(_ object: Object, property: Property, didUpdateHandler: @escaping ((_ isNotNil: Bool) -> Void)) {
     self.object = object
@@ -28,7 +28,7 @@ final class RealmPropertiesIsNilTableViewCell: UITableViewCell {
     nilSwitch.setOn(isNotNil, animated: true)
   }
   
-  @IBAction fileprivate func nilChanged(_ sender: UISwitch) {
+  @IBAction private func nilChanged(_ sender: UISwitch) {
     didUpdateHandler(sender.isOn)
   }
 }

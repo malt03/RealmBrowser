@@ -10,9 +10,9 @@ import UIKit
 import RealmSwift
 
 final class RealmPropertiesTableViewController: UITableViewController {
-  @IBOutlet fileprivate var keyboardAccessoryView: UIToolbar!
+  @IBOutlet private var keyboardAccessoryView: UIToolbar!
   
-  @IBAction fileprivate func endEditing() {
+  @IBAction private func endEditing() {
     view.endEditing(true)
   }
   
@@ -20,15 +20,15 @@ final class RealmPropertiesTableViewController: UITableViewController {
     view.endEditing(true)
   }
   
-  fileprivate var changeNotNilProperty: Property?
-  fileprivate var object: Object!
-  fileprivate var showDatePickerSections = Set<Int>()
-  fileprivate var composed = false
-  fileprivate var properties: [Property] {
+  private var changeNotNilProperty: Property?
+  private var object: Object!
+  private var showDatePickerSections = Set<Int>()
+  private var composed = false
+  private var properties: [Property] {
     return object.objectSchema.properties
   }
   
-  fileprivate func propertyAt(_ indexPath: IndexPath) -> Property? {
+  private func propertyAt(_ indexPath: IndexPath) -> Property? {
     if indexPath.row != 0 { return nil }
     return properties[indexPath.section]
   }
@@ -124,7 +124,7 @@ final class RealmPropertiesTableViewController: UITableViewController {
     return 44
   }
   
-  fileprivate func createIsNilCell(_ indexPath: IndexPath, property: Property) -> RealmPropertiesIsNilTableViewCell {
+  private func createIsNilCell(_ indexPath: IndexPath, property: Property) -> RealmPropertiesIsNilTableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "isNil", for: indexPath) as! RealmPropertiesIsNilTableViewCell
     cell.prepare(object, property: property) { [weak self] (isNotNil) in
       guard let s = self else { return }
@@ -133,7 +133,7 @@ final class RealmPropertiesTableViewController: UITableViewController {
     return cell
   }
   
-  fileprivate func createDateCell(_ indexPath: IndexPath, property: Property) -> DatePickingTableViewCell {
+  private func createDateCell(_ indexPath: IndexPath, property: Property) -> DatePickingTableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "datePicker", for: indexPath) as! DatePickingTableViewCell
     cell.prepare(object, property: property) { [weak self] in
       guard let s = self else { return }
@@ -147,7 +147,7 @@ final class RealmPropertiesTableViewController: UITableViewController {
     return cell
   }
   
-  fileprivate func updateIsNotNil(_ isNotNil: Bool, property: Property, indexPath: IndexPath) {
+  private func updateIsNotNil(_ isNotNil: Bool, property: Property, indexPath: IndexPath) {
     let value: AnyObject?
     
     if isNotNil {

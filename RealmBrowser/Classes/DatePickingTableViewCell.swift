@@ -10,11 +10,11 @@ import UIKit
 import RealmSwift
 
 final class DatePickingTableViewCell: UITableViewCell {
-  @IBOutlet fileprivate var datePicker: UIDatePicker!
+  @IBOutlet private var datePicker: UIDatePicker!
   
-  fileprivate var object: Object!
-  fileprivate var property: Property!
-  fileprivate var dateChangeHandler: (() -> Void)!
+  private var object: Object!
+  private var property: Property!
+  private var dateChangeHandler: (() -> Void)!
   
   func prepare(_ object: Object, property: Property, dateChangeHandler: @escaping (() -> Void)) {
     self.object = object
@@ -24,7 +24,7 @@ final class DatePickingTableViewCell: UITableViewCell {
     datePicker.setDate(date, animated: false)
   }
   
-  @IBAction fileprivate func dateChanged(_ sender: UIDatePicker) {
+  @IBAction private func dateChanged(_ sender: UIDatePicker) {
     try! Realm().write {
       object.setValue(sender.date, forKeyPath: property.name)
       dateChangeHandler()

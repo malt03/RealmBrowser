@@ -10,8 +10,8 @@ import UIKit
 import RealmSwift
 
 final class RealmObjectsTableViewCell: UITableViewCell {
-  @IBOutlet fileprivate weak var primaryPropertyLabel: UILabel!
-  @IBOutlet fileprivate weak var propertiesLabel: UILabel!
+  @IBOutlet private weak var primaryPropertyLabel: UILabel!
+  @IBOutlet private weak var propertiesLabel: UILabel!
   
   func prepare(_ object: Object) {
     primaryPropertyLabel.text = object.primaryPropertyText

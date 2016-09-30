@@ -9,7 +9,7 @@
 import RealmSwift
 
 extension Object {
-  fileprivate var primaryProperty: Property? {
+  private var primaryProperty: Property? {
     return objectSchema.primaryKeyProperty ?? objectSchema.properties.first
   }
   
@@ -30,7 +30,7 @@ extension Object {
       .joined(separator: ", ")
   }
 
-  fileprivate func propertyText(_ property: Property) -> String {
+  private func propertyText(_ property: Property) -> String {
     return "\(property.name): \(valueText(property))"
   }
   
