@@ -15,7 +15,7 @@ public final class RealmBrowser {
   
   public static var incorrectModuleNameMessage = "Please call RealmBrowser.instantiate with correct module name."
   
-  public static func instantiate(_ moduleName: String, withNavigationController: Bool = true, objectSearchEnabled: Bool = true) -> UIViewController {
+  public static func instantiate(moduleName: String, withNavigationController: Bool = true, objectSearchEnabled: Bool = true) -> UIViewController {
     RealmBrowser.moduleName = moduleName
     RealmBrowser.objectSearchEnabled = objectSearchEnabled
     
