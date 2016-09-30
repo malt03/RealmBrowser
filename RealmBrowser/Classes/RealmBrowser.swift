@@ -15,11 +15,11 @@ public final class RealmBrowser {
   
   public static var incorrectModuleNameMessage = "Please call RealmBrowser.instantiate with correct module name."
   
-  public static func instantiate(moduleName moduleName: String, withNavigationController: Bool = true, objectSearchEnabled: Bool = true) -> UIViewController {
+  public static func instantiate(_ moduleName: String, withNavigationController: Bool = true, objectSearchEnabled: Bool = true) -> UIViewController {
     RealmBrowser.moduleName = moduleName
     RealmBrowser.objectSearchEnabled = objectSearchEnabled
     
-    let bundle = NSBundle(path: NSBundle(forClass: RealmBrowser.self).pathForResource("RealmBrowser", ofType: "bundle")!)!
+    let bundle = Bundle(path: Bundle(for: RealmBrowser.self).path(forResource: "RealmBrowser", ofType: "bundle")!)!
     let viewController = UIStoryboard(name: "RealmBrowser", bundle: bundle).instantiateInitialViewController() as! RealmSchemaTableViewController
     viewController.prepare(withNavigationController)
     if withNavigationController {

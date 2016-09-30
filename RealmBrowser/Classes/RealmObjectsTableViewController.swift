@@ -10,14 +10,14 @@ import UIKit
 import RealmSwift
 
 final class RealmObjectsTableViewController: UITableViewController, UISearchBarDelegate {
-  private var objectSchema: ObjectSchema!
-  private var results: Results<DynamicObject>!
-  private var searchText = ""
-  private var composedObject: Object?
-  private var selectChild = false
-  private var didSelectChildHandler: ((object: Object) -> Void)?
+  fileprivate var objectSchema: ObjectSchema!
+  fileprivate var results: Results<DynamicObject>!
+  fileprivate var searchText = ""
+  fileprivate var composedObject: Object?
+  fileprivate var selectChild = false
+  fileprivate var didSelectChildHandler: ((_ object: Object) -> Void)?
   
-  private var searchedResults: [Object] {
+  fileprivate var searchedResults: [Object] {
     var objects = [Object]()
     
     if searchText == "" {
@@ -25,11 +25,11 @@ final class RealmObjectsTableViewController: UITableViewController, UISearchBarD
         objects.append(results[i])
       }
     } else {
-      let lower = searchText.lowercaseString
+      let lower = searchText.lowercased()
       for i in 0..<results.count {
         let object = results[i]
         let append = object.objectSchema.properties.reduce(false) {
-          $0 || object.valueText($1).lowercaseString.rangeOfString(lower) != nil
+          $0 || object.valueText($1).lowercased().range(of: lower) != nil
         }
         if append { objects.append(object) }
       }
@@ -38,12 +38,12 @@ final class RealmObjectsTableViewController: UITableViewController, UISearchBarD
     return objects
   }
   
-  private func object(indexPath: NSIndexPath) -> Object {
+  fileprivate func object(_ indexPath: IndexPath) -> Object {
     return RealmBrowser.objectSearchEnabled ? searchedResults[indexPath.row] : results[indexPath.row]
   }
   
-  override func viewWillAppear(animated: Bool) {
-    if let indexPath = tableView.indexPathForSelectedRow, cell = tableView.cellForRowAtIndexPath(indexPath) as? RealmObjectsTableViewCell {
+  override func viewWillAppear(_ animated: Bool) {
+    if let indexPath = tableView.indexPathForSelectedRow, let cell = tableView.cellForRow(at: indexPath) as? RealmObjectsTableViewCell {
       cell.prepare(object(indexPath))
     } else if let c = composedObject {
       let realm = try! Realm()
@@ -54,7 +54,7 @@ final class RealmObjectsTableViewController: UITableViewController, UISearchBarD
       }
     }
     if let selected = tableView.indexPathForSelectedRow {
-      tableView.deselectRowAtIndexPath(selected, animated: true)
+      tableView.deselectRow(at: selected, animated: true)
     }
     super.viewWillAppear(animated)
   }
@@ -66,87 +66,87 @@ final class RealmObjectsTableViewController: UITableViewController, UISearchBarD
     }
   }
   
-  func prepare(objectSchema: ObjectSchema) {
+  func prepare(_ objectSchema: ObjectSchema) {
     self.objectSchema = objectSchema
     let realm = try! Realm()
     results = realm.dynamicObjects(objectSchema.className)
     title = objectSchema.className
   }
   
-  func selectChild(property: Property, completionHandler: ((object: Object) -> Void)) {
+  func selectChild(_ property: Property, completionHandler: @escaping ((_ object: Object) -> Void)) {
     selectChild = true
     title = "Select \(property.name)"
     didSelectChildHandler = completionHandler
   }
   
-  @IBAction private func compose() {
+  @IBAction fileprivate func compose() {
     guard let klass = NSClassFromString(RealmBrowser.moduleName + "." + objectSchema.className) as? Object.Type else {
-      let alert = UIAlertController(title: "Error", message: "The module name \"\(RealmBrowser.moduleName)\" is incorrect. " + RealmBrowser.incorrectModuleNameMessage, preferredStyle: .Alert)
-      alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-      presentViewController(alert, animated: true, completion: nil)
+      let alert = UIAlertController(title: "Error", message: "The module name \"\(RealmBrowser.moduleName)\" is incorrect. " + RealmBrowser.incorrectModuleNameMessage, preferredStyle: .alert)
+      alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+      present(alert, animated: true, completion: nil)
       return
     }
     composedObject = klass.init()
-    performSegueWithIdentifier("showObject", sender: nil)
+    performSegue(withIdentifier: "showObject", sender: nil)
   }
   
-  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    if let vc = segue.destinationViewController as? RealmPropertiesTableViewController {
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    if let vc = segue.destination as? RealmPropertiesTableViewController {
       guard let o = (tableView.indexPathForSelectedRow.map { self.object($0) } ?? composedObject) else { return }
       vc.prepare(o, composed: composedObject != nil)
     }
   }
   
-  override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+  override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return RealmBrowser.objectSearchEnabled ? searchedResults.count : results.count
   }
   
-  override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCellWithIdentifier("default", forIndexPath: indexPath) as! RealmObjectsTableViewCell
+  override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    let cell = tableView.dequeueReusableCell(withIdentifier: "default", for: indexPath) as! RealmObjectsTableViewCell
     cell.prepare(object(indexPath))
-    cell.accessoryType = selectChild ? .None : .DisclosureIndicator
+    cell.accessoryType = selectChild ? .none : .disclosureIndicator
     return cell
   }
   
-  override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+  override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     return UITableViewAutomaticDimension
   }
   
-  override func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+  override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
     return 44
   }
   
-  override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+  override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
     return true
   }
   
-  override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+  override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
     let realm = try! Realm()
     try! realm.write {
       realm.delete(searchedResults[indexPath.row])
-      tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+      tableView.deleteRows(at: [indexPath], with: .fade)
     }
   }
   
-  override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+  override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     if selectChild {
-      didSelectChildHandler?(object: object(indexPath))
-      navigationController?.popViewControllerAnimated(true)
+      didSelectChildHandler?(object(indexPath))
+      navigationController?.popViewController(animated: true)
     } else {
-      performSegueWithIdentifier("showObject", sender: nil)
+      performSegue(withIdentifier: "showObject", sender: nil)
     }
   }
   
-  override func scrollViewDidScroll(scrollView: UIScrollView) {
+  override func scrollViewDidScroll(_ scrollView: UIScrollView) {
     view.endEditing(true)
   }
 
-  func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+  func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
     self.searchText = searchText
     tableView.reloadData()
   }
   
-  func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+  func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
     view.endEditing(true)
   }
 }

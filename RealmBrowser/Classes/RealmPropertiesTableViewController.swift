@@ -10,94 +10,94 @@ import UIKit
 import RealmSwift
 
 final class RealmPropertiesTableViewController: UITableViewController {
-  @IBOutlet private var keyboardAccessoryView: UIToolbar!
+  @IBOutlet fileprivate var keyboardAccessoryView: UIToolbar!
   
-  @IBAction private func endEditing() {
+  @IBAction fileprivate func endEditing() {
     view.endEditing(true)
   }
   
-  override func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+  override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
     view.endEditing(true)
   }
   
-  private var changeNotNilProperty: Property?
-  private var object: Object!
-  private var showDatePickerSections = Set<Int>()
-  private var composed = false
-  private var properties: [Property] {
+  fileprivate var changeNotNilProperty: Property?
+  fileprivate var object: Object!
+  fileprivate var showDatePickerSections = Set<Int>()
+  fileprivate var composed = false
+  fileprivate var properties: [Property] {
     return object.objectSchema.properties
   }
   
-  private func propertyAt(indexPath: NSIndexPath) -> Property? {
+  fileprivate func propertyAt(_ indexPath: IndexPath) -> Property? {
     if indexPath.row != 0 { return nil }
     return properties[indexPath.section]
   }
   
-  func prepare(object: Object, composed: Bool) {
+  func prepare(_ object: Object, composed: Bool) {
     self.composed = composed
     self.object = object
     title = composed ? "Compose \(object.objectSchema.className)" : object.primaryValueText
   }
   
-  override func viewWillAppear(animated: Bool) {
+  override func viewWillAppear(_ animated: Bool) {
     tableView.reloadData()
     super.viewWillAppear(animated)
   }
   
-  override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+  override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     guard let property = propertyAt(indexPath) else {
-      tableView.deselectRowAtIndexPath(indexPath, animated: true)
+      tableView.deselectRow(at: indexPath, animated: true)
       return
     }
 
     switch property.type {
-    case .Double, .Float, .Int, .String, .Bool:
-      guard let cell = tableView.cellForRowAtIndexPath(indexPath) as? RealmPropertiesValueTableViewCell else { break }
+    case .double, .float, .int, .string, .bool:
+      guard let cell = tableView.cellForRow(at: indexPath) as? RealmPropertiesValueTableViewCell else { break }
       cell.tap()
-    case .Object:
+    case .object:
       if let value = object[property.name] as? Object {
-        let vc = storyboard?.instantiateViewControllerWithIdentifier("RealmPropertiesTableViewController") as! RealmPropertiesTableViewController
+        let vc = storyboard?.instantiateViewController(withIdentifier: "RealmPropertiesTableViewController") as! RealmPropertiesTableViewController
         vc.prepare(value, composed: false)
         navigationController?.pushViewController(vc, animated: true)
         return
       }
-    case .Date:
-      let dateIndexPath = NSIndexPath(forRow: 1, inSection: indexPath.section)
-      if showDatePickerSections.contains(indexPath.section) {
-        showDatePickerSections.remove(indexPath.section)
-        tableView.deleteRowsAtIndexPaths([dateIndexPath], withRowAnimation: .Fade)
+    case .date:
+      let dateIndexPath = IndexPath(row: 1, section: (indexPath as NSIndexPath).section)
+      if showDatePickerSections.contains((indexPath as NSIndexPath).section) {
+        showDatePickerSections.remove((indexPath as NSIndexPath).section)
+        tableView.deleteRows(at: [dateIndexPath], with: .fade)
       } else {
-        showDatePickerSections.insert(indexPath.section)
-        tableView.insertRowsAtIndexPaths([dateIndexPath], withRowAnimation: .Fade)
+        showDatePickerSections.insert((indexPath as NSIndexPath).section)
+        tableView.insertRows(at: [dateIndexPath], with: .fade)
       }
-    case .Any, .Array, .Data, .LinkingObjects:
+    case .any, .array, .data, .linkingObjects:
       break
     }
-    tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    tableView.deselectRow(at: indexPath, animated: true)
   }
   
-  override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+  override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
     return try! properties[section].name.snakeCaseString.stringByReplacing("_") { _ in " " }
   }
   
-  override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+  override func numberOfSections(in tableView: UITableView) -> Int {
     return properties.count
   }
   
-  override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return 1 + (properties[section].optional ? 1 : 0) + (showDatePickerSections.contains(section) ? 1 : 0)
+  override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return 1 + (properties[section].isOptional ? 1 : 0) + (showDatePickerSections.contains(section) ? 1 : 0)
   }
   
-  override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    let propertyIndexPath = NSIndexPath(forRow: 0, inSection: indexPath.section)
+  override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    let propertyIndexPath = IndexPath(row: 0, section: (indexPath as NSIndexPath).section)
     let property = propertyAt(propertyIndexPath)!
-    switch indexPath.row {
+    switch (indexPath as NSIndexPath).row {
     case 0:
-      let cell = tableView.dequeueReusableCellWithIdentifier("value", forIndexPath: indexPath) as! RealmPropertiesValueTableViewCell
+      let cell = tableView.dequeueReusableCell(withIdentifier: "value", for: indexPath) as! RealmPropertiesValueTableViewCell
       cell.prepare(object, property: property, composed: composed, keyboardAccessoryView: keyboardAccessoryView) { [weak self] (value) in
         guard let s = self,
-          cellForNil = s.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 1, inSection: indexPath.section)) as? RealmPropertiesIsNilTableViewCell ??
-            s.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 2, inSection: indexPath.section)) as? RealmPropertiesIsNilTableViewCell else
+          let cellForNil = s.tableView.cellForRow(at: IndexPath(row: 1, section: indexPath.section)) as? RealmPropertiesIsNilTableViewCell ??
+            s.tableView.cellForRow(at: IndexPath(row: 2, section: indexPath.section)) as? RealmPropertiesIsNilTableViewCell else
         {
           return
         }
@@ -105,7 +105,7 @@ final class RealmPropertiesTableViewController: UITableViewController {
       }
       return cell
     case 1:
-      if showDatePickerSections.contains(indexPath.section) {
+      if showDatePickerSections.contains((indexPath as NSIndexPath).section) {
         return createDateCell(indexPath, property: property)
       }
       return createIsNilCell(indexPath, property: property)
@@ -116,55 +116,55 @@ final class RealmPropertiesTableViewController: UITableViewController {
     }
   }
   
-  override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+  override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     return UITableViewAutomaticDimension
   }
   
-  override func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+  override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
     return 44
   }
   
-  private func createIsNilCell(indexPath: NSIndexPath, property: Property) -> RealmPropertiesIsNilTableViewCell {
-    let cell = tableView.dequeueReusableCellWithIdentifier("isNil", forIndexPath: indexPath) as! RealmPropertiesIsNilTableViewCell
+  fileprivate func createIsNilCell(_ indexPath: IndexPath, property: Property) -> RealmPropertiesIsNilTableViewCell {
+    let cell = tableView.dequeueReusableCell(withIdentifier: "isNil", for: indexPath) as! RealmPropertiesIsNilTableViewCell
     cell.prepare(object, property: property) { [weak self] (isNotNil) in
       guard let s = self else { return }
-      s.updateIsNotNil(isNotNil, property: property, indexPath: NSIndexPath(forRow: 0, inSection: indexPath.section))
+      s.updateIsNotNil(isNotNil, property: property, indexPath: IndexPath(row: 0, section: indexPath.section))
     }
     return cell
   }
   
-  private func createDateCell(indexPath: NSIndexPath, property: Property) -> DatePickingTableViewCell {
-    let cell = tableView.dequeueReusableCellWithIdentifier("datePicker", forIndexPath: indexPath) as! DatePickingTableViewCell
+  fileprivate func createDateCell(_ indexPath: IndexPath, property: Property) -> DatePickingTableViewCell {
+    let cell = tableView.dequeueReusableCell(withIdentifier: "datePicker", for: indexPath) as! DatePickingTableViewCell
     cell.prepare(object, property: property) { [weak self] in
       guard let s = self else { return }
-      guard let cellForValue = s.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: indexPath.section)) as? RealmPropertiesValueTableViewCell else { return }
+      guard let cellForValue = s.tableView.cellForRow(at: IndexPath(row: 0, section: indexPath.section)) as? RealmPropertiesValueTableViewCell else { return }
       cellForValue.updateValue(s.object, property: property, composed: s.composed, animated: true)
       
-      if let cellForNil = s.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 2, inSection: indexPath.section)) as? RealmPropertiesIsNilTableViewCell {
+      if let cellForNil = s.tableView.cellForRow(at: IndexPath(row: 2, section: indexPath.section)) as? RealmPropertiesIsNilTableViewCell {
         cellForNil.updateNil(true)
       }
     }
     return cell
   }
   
-  private func updateIsNotNil(isNotNil: Bool, property: Property, indexPath: NSIndexPath) {
+  fileprivate func updateIsNotNil(_ isNotNil: Bool, property: Property, indexPath: IndexPath) {
     let value: AnyObject?
     
     if isNotNil {
       property.objectClassName
       switch property.type {
-      case .Any:    value = ""
-      case .Array:  value = []
-      case .Bool:   value = false
-      case .Data:   value = NSData()
-      case .Date:   value = NSDate()
-      case .Double: value = Double(0)
-      case .Float:  value = Float(0)
-      case .Int:    value = Int(0)
-      case .String: value = ""
-      case .Object:
+      case .any:    value = "" as AnyObject?
+      case .array:  value = [] as AnyObject?
+      case .bool:   value = false as AnyObject?
+      case .data:   value = Data() as AnyObject?
+      case .date:   value = Date() as AnyObject?
+      case .double: value = Double(0) as AnyObject?
+      case .float:  value = Float(0) as AnyObject?
+      case .int:    value = Int(0) as AnyObject?
+      case .string: value = "" as AnyObject?
+      case .object:
         changeNotNilProperty = property
-        performSegueWithIdentifier("selectChild", sender: nil)
+        performSegue(withIdentifier: "selectChild", sender: nil)
         return
       default: return
       }
@@ -176,14 +176,14 @@ final class RealmPropertiesTableViewController: UITableViewController {
       object.setValue(value, forKeyPath: property.name)
     }
     
-    let cell = tableView.cellForRowAtIndexPath(indexPath) as! RealmPropertiesValueTableViewCell
+    let cell = tableView.cellForRow(at: indexPath) as! RealmPropertiesValueTableViewCell
     cell.updateValue(object, property: property, composed: composed, animated: true)
   }
   
-  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    if let vc = segue.destinationViewController as? RealmObjectsTableViewController,
-      property = changeNotNilProperty,
-      className = property.objectClassName
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    if let vc = segue.destination as? RealmObjectsTableViewController,
+      let property = changeNotNilProperty,
+      let className = property.objectClassName
     {
       for schema in try! Realm().schema.objectSchema {
         if schema.className == className {
