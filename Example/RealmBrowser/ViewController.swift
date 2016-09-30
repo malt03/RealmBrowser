@@ -11,8 +11,8 @@ import RealmSwift
 import RealmBrowser
 
 class ViewController: UIViewController {
-  override func viewDidAppear(animated: Bool) {
+  override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
-    presentViewController(RealmBrowser.instantiate(moduleName: "RealmBrowser_Example"), animated: true, completion: nil)
+    present(RealmBrowser.instantiate(moduleName: "RealmBrowser_Example"), animated: true, completion: nil)
   }
 }

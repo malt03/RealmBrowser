@@ -15,9 +15,9 @@ final class RealmPropertiesValueTableViewCell: UITableViewCell {
   
   private var object: Object!
   private var property: Property!
-  private var valueDidChangeHandler: ((value: AnyObject?) -> Void)!
+  private var valueDidChangeHandler: ((_ value: AnyObject?) -> Void)!
   
-  func prepare(object: Object, property: Property, composed: Bool, keyboardAccessoryView: UIView, valueDidChangeHandler: ((value: AnyObject?) -> Void)) {
+  func prepare(_ object: Object, property: Property, composed: Bool, keyboardAccessoryView: UIView, valueDidChangeHandler: @escaping ((_ value: AnyObject?) -> Void)) {
     self.valueDidChangeHandler = valueDidChangeHandler
     
     valueTextField.inputAccessoryView = keyboardAccessoryView
@@ -25,98 +25,98 @@ final class RealmPropertiesValueTableViewCell: UITableViewCell {
     updateValue(object, property: property, composed: composed, animated: false)
   }
   
-  func updateValue(object: Object, property: Property, composed: Bool, animated: Bool) {
-    accessoryType = .None
-    userInteractionEnabled = true
-    valueTextField.enabled = true
-    valueTextField.hidden = false
-    valueTextField.textColor = .blackColor()
+  func updateValue(_ object: Object, property: Property, composed: Bool, animated: Bool) {
+    accessoryType = .none
+    isUserInteractionEnabled = true
+    valueTextField.isEnabled = true
+    valueTextField.isHidden = false
+    valueTextField.textColor = .black
     valueTextField.attributedPlaceholder = NSAttributedString(string: "input value", attributes: [
-      NSForegroundColorAttributeName: UIColor.lightGrayColor()
+      NSForegroundColorAttributeName: UIColor.lightGray
     ])
 
-    valueSwitch.enabled = true
-    valueSwitch.hidden = true
+    valueSwitch.isEnabled = true
+    valueSwitch.isHidden = true
     
     self.object = object
     self.property = property
     
-    valueTextField.text = object.valueText(property)
+    valueTextField.text = object.valueText(property: property)
 
     let value = object[property.name]
     
     switch property.type {
-    case .Any, .Array, .Data, .Date, .LinkingObjects:
-      valueTextField.enabled = false
-    case .Object:
-      valueTextField.enabled = false
-      accessoryType = .DisclosureIndicator
-    case .Bool:
+    case .any, .array, .data, .date, .linkingObjects:
+      valueTextField.isEnabled = false
+    case .object:
+      valueTextField.isEnabled = false
+      accessoryType = .disclosureIndicator
+    case .bool:
       valueSwitch.setOn(value as? Bool ?? false, animated: animated)
-      valueTextField.enabled = false
-      valueTextField.hidden = true
-      valueSwitch.hidden = false
-    case .Double, .Float:
-      valueTextField.keyboardType = .DecimalPad
-    case .Int:
-      valueTextField.keyboardType = .NumberPad
-    case .String:
-      valueTextField.keyboardType = .Default
+      valueTextField.isEnabled = false
+      valueTextField.isHidden = true
+      valueSwitch.isHidden = false
+    case .double, .float:
+      valueTextField.keyboardType = .decimalPad
+    case .int:
+      valueTextField.keyboardType = .numberPad
+    case .string:
+      valueTextField.keyboardType = .default
     }
     
     if object.objectSchema.primaryKeyProperty == property && !composed {
-      valueTextField.enabled = false
-      valueSwitch.enabled = false
-      valueTextField.textColor = .lightGrayColor()
-      userInteractionEnabled = false
+      valueTextField.isEnabled = false
+      valueSwitch.isEnabled = false
+      valueTextField.textColor = .lightGray
+      isUserInteractionEnabled = false
     }
     
     if value == nil {
       valueTextField.text = ""
       valueTextField.attributedPlaceholder = NSAttributedString(string: "nil", attributes: [
-        NSForegroundColorAttributeName: UIColor.redColor().colorWithAlphaComponent(0.5)
+        NSForegroundColorAttributeName: UIColor.red.withAlphaComponent(0.5)
       ])
     }
   }
   
   func tap() {
-    if valueTextField.enabled { valueTextField.becomeFirstResponder() }
-    if valueSwitch.enabled {
-      valueSwitch.setOn(!valueSwitch.on, animated: true)
+    if valueTextField.isEnabled { valueTextField.becomeFirstResponder() }
+    if valueSwitch.isEnabled {
+      valueSwitch.setOn(!valueSwitch.isOn, animated: true)
       switchValueDidChange(valueSwitch)
     }
   }
   
-  @IBAction func valueDidChange(sender: UITextField) {
+  @IBAction func valueDidChange(_ sender: UITextField) {
     valueTextField.attributedPlaceholder = NSAttributedString(string: "input value", attributes: [
-      NSForegroundColorAttributeName: UIColor.lightGrayColor()
+      NSForegroundColorAttributeName: UIColor.lightGray
     ])
     let text = sender.text ?? ""
     let value: AnyObject?
     switch property.type {
-    case .Double: value = Double(text)
-    case .Float:  value = Float(text)
-    case .Int:    value = Int(text)
-    case .String: value = text
+    case .double: value = Double(text) as AnyObject?
+    case .float:  value = Float(text) as AnyObject?
+    case .int:    value = Int(text) as AnyObject?
+    case .string: value = text as AnyObject?
     default: return
     }
     guard let v = value else { return }
     update(v)
   }
 
-  @IBAction func didEndOnExit(sender: UITextField) {
+  @IBAction func didEndOnExit(_ sender: UITextField) {
     sender.resignFirstResponder()
   }
 
-  @IBAction func switchValueDidChange(sender: UISwitch) {
-    if property.type != .Bool { return }
-    update(sender.on)
+  @IBAction func switchValueDidChange(_ sender: UISwitch) {
+    if property.type != .bool { return }
+    update(sender.isOn as AnyObject)
   }
   
-  private func update(value: AnyObject) {
+  private func update(_ value: AnyObject) {
     try! Realm().write {
       object.setValue(value, forKeyPath: property.name)
     }
-    valueDidChangeHandler(value: value)
+    valueDidChangeHandler(value)
   }
 }

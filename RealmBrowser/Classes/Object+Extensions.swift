@@ -15,7 +15,7 @@ extension Object {
   
   var primaryValueText: String {
     guard let property = primaryProperty else { return "no properties" }
-    return valueText(property)
+    return valueText(property: property)
   }
   
   var primaryPropertyText: String {
@@ -27,37 +27,37 @@ extension Object {
     guard let property = primaryProperty else { return "" }
     return objectSchema.properties.filter { $0.name != property.name }
       .map { propertyText($0) }
-      .joinWithSeparator(", ")
+      .joined(separator: ", ")
   }
 
-  private func propertyText(property: Property) -> String {
-    return "\(property.name): \(valueText(property))"
+  private func propertyText(_ property: Property) -> String {
+    return "\(property.name): \(valueText(property: property))"
   }
   
   func valueText(property: Property) -> String {
     guard let value = self[property.name] else { return "nil" }
     switch property.type {
-    case .Bool:
+    case .bool:
       return "\(value as! Bool)"
-    case .Double, .Float, .Int, .String:
+    case .double, .float, .int, .string:
       return "\(value)"
-    case .Date:
-      let date = value as! NSDate
-      let formatter = NSDateFormatter()
-      formatter.dateStyle = .ShortStyle
-      formatter.timeStyle = .ShortStyle
-      return "(\(formatter.stringFromDate(date)))"
-    case .Array:
+    case .date:
+      let date = value as! Date
+      let formatter = DateFormatter()
+      formatter.dateStyle = .short
+      formatter.timeStyle = .short
+      return "(\(formatter.string(from: date)))"
+    case .array:
       let array = value as! ListBase
       return "\(array.count) items"
-    case .Object:
+    case .object:
       return "(\((value as! Object).primaryPropertyText))"
-    case .LinkingObjects:
+    case .linkingObjects:
       let linking = value as! LinkingObjects
       return "\(linking.count) items"
-    case .Data:
+    case .data:
       return "NSData"
-    case .Any:
+    case .any:
       return "Any"
     }
   }

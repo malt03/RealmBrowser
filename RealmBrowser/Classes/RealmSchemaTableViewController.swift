@@ -10,57 +10,57 @@ import UIKit
 import RealmSwift
 
 final class RealmSchemaTableViewController: UITableViewController, UISearchBarDelegate {
-  func prepare(doneButtonEnabled: Bool) {
+  func prepare(_ doneButtonEnabled: Bool) {
     if doneButtonEnabled {
-      navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: #selector(dismiss))
+      navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(close))
     }
   }
   
-  @objc private func dismiss() {
-    dismissViewControllerAnimated(true, completion: nil)
+  @objc private func close() {
+    self.dismiss(animated: true, completion: nil)
   }
   
-  private let objectSchemas = try! Realm().schema.objectSchema.sort { $0.className < $1.className }
+  private let objectSchemas = try! Realm().schema.objectSchema.sorted { $0.className < $1.className }
   private var searchText = ""
   
   private var searchedObjectSchemas: [ObjectSchema] {
     if searchText == "" { return objectSchemas }
-    let lower = searchText.lowercaseString
+    let lower = searchText.lowercased()
     return objectSchemas.filter {
-      $0.className.lowercaseString.rangeOfString(lower) != nil ||
-        $0.properties.reduce(false) { $0 || ($1.name.lowercaseString.rangeOfString(lower) != nil) }
+      $0.className.lowercased().range(of: lower) != nil ||
+        $0.properties.reduce(false) { $0 || ($1.name.lowercased().range(of: lower) != nil) }
     }
   }
   
-  override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+  override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return searchedObjectSchemas.count
   }
   
-  override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCellWithIdentifier("default")!
+  override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    let cell = tableView.dequeueReusableCell(withIdentifier: "default")!
     let schema = searchedObjectSchemas[indexPath.row]
     cell.textLabel?.text = schema.className
-    cell.detailTextLabel?.text = schema.properties.map { $0.name }.joinWithSeparator(", ")
+    cell.detailTextLabel?.text = schema.properties.map { $0.name }.joined(separator: ", ")
     return cell
   }
   
-  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    if let vc = segue.destinationViewController as? RealmObjectsTableViewController {
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    if let vc = segue.destination as? RealmObjectsTableViewController {
       guard let indexPath = tableView.indexPathForSelectedRow else { return }
-      vc.prepare(objectSchemas[indexPath.row])
+      vc.prepare(objectSchema: objectSchemas[indexPath.row])
     }
   }
 
-  override func scrollViewDidScroll(scrollView: UIScrollView) {
+  override func scrollViewDidScroll(_ scrollView: UIScrollView) {
     view.endEditing(true)
   }
   
-  func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+  func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
     self.searchText = searchText
     tableView.reloadData()
   }
   
-  func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+  func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
     view.endEditing(true)
   }
 }
