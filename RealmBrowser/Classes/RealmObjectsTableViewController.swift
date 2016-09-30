@@ -29,7 +29,7 @@ final class RealmObjectsTableViewController: UITableViewController, UISearchBarD
       for i in 0..<results.count {
         let object = results[i]
         let append = object.objectSchema.properties.reduce(false) {
-          $0 || object.valueText($1).lowercased().range(of: lower) != nil
+          $0 || object.valueText(property: $1).lowercased().range(of: lower) != nil
         }
         if append { objects.append(object) }
       }
@@ -44,7 +44,7 @@ final class RealmObjectsTableViewController: UITableViewController, UISearchBarD
   
   override func viewWillAppear(_ animated: Bool) {
     if let indexPath = tableView.indexPathForSelectedRow, let cell = tableView.cellForRow(at: indexPath) as? RealmObjectsTableViewCell {
-      cell.prepare(object(indexPath))
+      cell.prepare(object: object(indexPath))
     } else if let c = composedObject {
       let realm = try! Realm()
       try! realm.write {
@@ -66,14 +66,14 @@ final class RealmObjectsTableViewController: UITableViewController, UISearchBarD
     }
   }
   
-  func prepare(_ objectSchema: ObjectSchema) {
+  func prepare(objectSchema: ObjectSchema) {
     self.objectSchema = objectSchema
     let realm = try! Realm()
     results = realm.dynamicObjects(objectSchema.className)
     title = objectSchema.className
   }
   
-  func selectChild(_ property: Property, completionHandler: @escaping ((_ object: Object) -> Void)) {
+  func selectChild(property: Property, completionHandler: @escaping ((_ object: Object) -> Void)) {
     selectChild = true
     title = "Select \(property.name)"
     didSelectChildHandler = completionHandler
@@ -103,7 +103,7 @@ final class RealmObjectsTableViewController: UITableViewController, UISearchBarD
   
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "default", for: indexPath) as! RealmObjectsTableViewCell
-    cell.prepare(object(indexPath))
+    cell.prepare(object: object(indexPath))
     cell.accessoryType = selectChild ? .none : .disclosureIndicator
     return cell
   }

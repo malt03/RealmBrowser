@@ -41,7 +41,7 @@ final class RealmPropertiesValueTableViewCell: UITableViewCell {
     self.object = object
     self.property = property
     
-    valueTextField.text = object.valueText(property)
+    valueTextField.text = object.valueText(property: property)
 
     let value = object[property.name]
     

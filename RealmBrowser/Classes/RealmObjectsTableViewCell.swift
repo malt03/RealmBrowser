@@ -13,7 +13,7 @@ final class RealmObjectsTableViewCell: UITableViewCell {
   @IBOutlet private weak var primaryPropertyLabel: UILabel!
   @IBOutlet private weak var propertiesLabel: UILabel!
   
-  func prepare(_ object: Object) {
+  func prepare(object: Object) {
     primaryPropertyLabel.text = object.primaryPropertyText
     propertiesLabel.text = object.propertiesText
   }

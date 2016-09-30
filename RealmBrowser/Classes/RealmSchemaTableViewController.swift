@@ -12,11 +12,11 @@ import RealmSwift
 final class RealmSchemaTableViewController: UITableViewController, UISearchBarDelegate {
   func prepare(_ doneButtonEnabled: Bool) {
     if doneButtonEnabled {
-      //navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismiss(_:)))
+      navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(close))
     }
   }
   
-  @objc private func dismiss() {
+  @objc private func close() {
     self.dismiss(animated: true, completion: nil)
   }
   
@@ -47,7 +47,7 @@ final class RealmSchemaTableViewController: UITableViewController, UISearchBarDe
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     if let vc = segue.destination as? RealmObjectsTableViewController {
       guard let indexPath = tableView.indexPathForSelectedRow else { return }
-      vc.prepare(objectSchemas[indexPath.row])
+      vc.prepare(objectSchema: objectSchemas[indexPath.row])
     }
   }
 

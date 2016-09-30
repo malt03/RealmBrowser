@@ -16,7 +16,7 @@ final class DatePickingTableViewCell: UITableViewCell {
   private var property: Property!
   private var dateChangeHandler: (() -> Void)!
   
-  func prepare(_ object: Object, property: Property, dateChangeHandler: @escaping (() -> Void)) {
+  func prepare(object: Object, property: Property, dateChangeHandler: @escaping (() -> Void)) {
     self.object = object
     self.property = property
     self.dateChangeHandler = dateChangeHandler

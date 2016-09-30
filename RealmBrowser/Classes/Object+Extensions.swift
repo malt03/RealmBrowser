@@ -15,7 +15,7 @@ extension Object {
   
   var primaryValueText: String {
     guard let property = primaryProperty else { return "no properties" }
-    return valueText(property)
+    return valueText(property: property)
   }
   
   var primaryPropertyText: String {
@@ -31,10 +31,10 @@ extension Object {
   }
 
   private func propertyText(_ property: Property) -> String {
-    return "\(property.name): \(valueText(property))"
+    return "\(property.name): \(valueText(property: property))"
   }
   
-  func valueText(_ property: Property) -> String {
+  func valueText(property: Property) -> String {
     guard let value = self[property.name] else { return "nil" }
     switch property.type {
     case .bool:

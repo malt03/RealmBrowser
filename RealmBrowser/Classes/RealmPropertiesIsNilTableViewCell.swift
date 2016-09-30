@@ -15,7 +15,7 @@ final class RealmPropertiesIsNilTableViewCell: UITableViewCell {
   private var property: Property!
   private var didUpdateHandler: ((_ isNotNil: Bool) -> Void)!
   
-  func prepare(_ object: Object, property: Property, didUpdateHandler: @escaping ((_ isNotNil: Bool) -> Void)) {
+  func prepare(object: Object, property: Property, didUpdateHandler: @escaping ((_ isNotNil: Bool) -> Void)) {
     self.object = object
     self.property = property
     self.didUpdateHandler = didUpdateHandler
@@ -24,7 +24,7 @@ final class RealmPropertiesIsNilTableViewCell: UITableViewCell {
     nilSwitch.isOn = (object[property.name] != nil)
   }
   
-  func updateNil(_ isNotNil: Bool) {
+  func updateNil(isNotNil: Bool) {
     nilSwitch.setOn(isNotNil, animated: true)
   }
   

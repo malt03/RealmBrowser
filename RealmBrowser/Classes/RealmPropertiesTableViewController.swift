@@ -101,7 +101,7 @@ final class RealmPropertiesTableViewController: UITableViewController {
         {
           return
         }
-        cellForNil.updateNil(true)
+        cellForNil.updateNil(isNotNil: true)
       }
       return cell
     case 1:
@@ -126,7 +126,7 @@ final class RealmPropertiesTableViewController: UITableViewController {
   
   private func createIsNilCell(_ indexPath: IndexPath, property: Property) -> RealmPropertiesIsNilTableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "isNil", for: indexPath) as! RealmPropertiesIsNilTableViewCell
-    cell.prepare(object, property: property) { [weak self] (isNotNil) in
+    cell.prepare(object: object, property: property) { [weak self] (isNotNil) in
       guard let s = self else { return }
       s.updateIsNotNil(isNotNil, property: property, indexPath: IndexPath(row: 0, section: indexPath.section))
     }
@@ -135,13 +135,13 @@ final class RealmPropertiesTableViewController: UITableViewController {
   
   private func createDateCell(_ indexPath: IndexPath, property: Property) -> DatePickingTableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "datePicker", for: indexPath) as! DatePickingTableViewCell
-    cell.prepare(object, property: property) { [weak self] in
+    cell.prepare(object: object, property: property) { [weak self] in
       guard let s = self else { return }
       guard let cellForValue = s.tableView.cellForRow(at: IndexPath(row: 0, section: indexPath.section)) as? RealmPropertiesValueTableViewCell else { return }
       cellForValue.updateValue(s.object, property: property, composed: s.composed, animated: true)
       
       if let cellForNil = s.tableView.cellForRow(at: IndexPath(row: 2, section: indexPath.section)) as? RealmPropertiesIsNilTableViewCell {
-        cellForNil.updateNil(true)
+        cellForNil.updateNil(isNotNil: true)
       }
     }
     return cell
@@ -187,8 +187,8 @@ final class RealmPropertiesTableViewController: UITableViewController {
     {
       for schema in try! Realm().schema.objectSchema {
         if schema.className == className {
-          vc.prepare(schema)
-          vc.selectChild(property) { [weak self] (object) in
+          vc.prepare(objectSchema: schema)
+          vc.selectChild(property: property) { [weak self] (object) in
             guard let s = self else { return }
             try! Realm().write {
               s.object.setValue(object, forKeyPath: property.name)
