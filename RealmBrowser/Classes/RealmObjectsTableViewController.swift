@@ -131,7 +131,7 @@ final class RealmObjectsTableViewController: UITableViewController, UISearchBarD
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     if selectChild {
       didSelectChildHandler?(object(indexPath))
-      navigationController?.popViewController(animated: true)
+      _ = navigationController?.popViewController(animated: true)
     } else {
       performSegue(withIdentifier: "showObject", sender: nil)
     }

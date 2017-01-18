@@ -151,7 +151,6 @@ final class RealmPropertiesTableViewController: UITableViewController {
     let value: AnyObject?
     
     if isNotNil {
-      property.objectClassName
       switch property.type {
       case .any:    value = "" as AnyObject?
       case .array:  value = [] as AnyObject?
