@@ -1,11 +1,11 @@
 PODS:
-  - Realm (2.0.0):
-    - Realm/Headers (= 2.0.0)
-  - Realm/Headers (2.0.0)
-  - RealmBrowser (0.1.4):
+  - Realm (2.8.0):
+    - Realm/Headers (= 2.8.0)
+  - Realm/Headers (2.8.0)
+  - RealmBrowser (0.2.1):
     - RealmSwift
-  - RealmSwift (2.0.0):
-    - Realm (= 2.0.0)
+  - RealmSwift (2.8.0):
+    - Realm (= 2.8.0)
 
 DEPENDENCIES:
   - RealmBrowser (from `../`)
@@ -15,10 +15,10 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Realm: 6dda421ae4b3e9a09742fc2cf4b876d459cbedcd
-  RealmBrowser: d8d2db3be2f45e6f3d3fbb179ac874be5ea4e9c7
-  RealmSwift: 7d015f34a2781a50889be9b5a15c36c08597ea0e
+  Realm: 929243ad2b618b3232e70658bedc61110e7563f1
+  RealmBrowser: 068e3abf73ca4270f5a396af1f00b1ccde16a0ba
+  RealmSwift: 5b7079b891f2833d1849294161ba3e092bbda3f6
 
 PODFILE CHECKSUM: 7fba4ebdc4225f946b6893a48feb5af1427dcbc8
 
-COCOAPODS: 1.1.0.rc.2
+COCOAPODS: 1.2.1
