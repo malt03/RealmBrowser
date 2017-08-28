@@ -1,6 +1,0 @@
-framework module Pods_RealmBrowser_Tests {
-  umbrella header "Pods-RealmBrowser_Tests-umbrella.h"
-
-  export *
-  module * { export * }
-}

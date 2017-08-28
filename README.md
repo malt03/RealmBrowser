@@ -1,7 +1,7 @@
 # RealmBrowser
 
 [![Platform](https://img.shields.io/cocoapods/p/RealmBrowser.svg?style=flat)](http://cocoapods.org/pods/RealmBrowser)
-![Language](https://img.shields.io/badge/language-Swift%203.0-orange.svg)
+![Language](https://img.shields.io/badge/language-Swift%204.0-orange.svg)
 [![CocoaPods](https://img.shields.io/cocoapods/v/RealmBrowser.svg?style=flat)](http://cocoapods.org/pods/RealmBrowser)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 ![License](https://img.shields.io/github/license/malt03/RealmBrowser.svg?style=flat)

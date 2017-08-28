@@ -19,7 +19,12 @@ public final class RealmBrowser {
     RealmBrowser.moduleName = moduleName
     RealmBrowser.objectSearchEnabled = objectSearchEnabled
     
-    let bundle = Bundle(path: Bundle(for: RealmBrowser.self).path(forResource: "RealmBrowser", ofType: "bundle")!)!
+    let bundle: Bundle
+    if let path = Bundle(for: RealmBrowser.self).path(forResource: "RealmBrowser", ofType: "bundle") {
+      bundle = Bundle(path: path)!
+    } else {
+      bundle = Bundle(for: RealmBrowser.self)
+    }
     let viewController = UIStoryboard(name: "RealmBrowser", bundle: bundle).instantiateInitialViewController() as! RealmSchemaTableViewController
     viewController.prepare(withNavigationController)
     if withNavigationController {
