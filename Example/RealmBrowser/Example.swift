@@ -10,25 +10,25 @@ import UIKit
 import RealmSwift
 
 class Example: Object {
-  dynamic var boolValue = true
-  dynamic var int8Value = Int8(0)
-  dynamic var int16Value = Int16(0)
-  dynamic var int32Value = Int32(0)
-  dynamic var int64Value = Int64(0)
-  dynamic var doubleValue = Double(0)
-  dynamic var floatValue = Float(0)
-  dynamic var stringValue = ""
-  dynamic var dateValue = NSDate()
-  dynamic var dataValue = NSData()
+  @objc dynamic var boolValue = true
+  @objc dynamic var int8Value = Int8(0)
+  @objc dynamic var int16Value = Int16(0)
+  @objc dynamic var int32Value = Int32(0)
+  @objc dynamic var int64Value = Int64(0)
+  @objc dynamic var doubleValue = Double(0)
+  @objc dynamic var floatValue = Float(0)
+  @objc dynamic var stringValue = ""
+  @objc dynamic var dateValue = NSDate()
+  @objc dynamic var dataValue = NSData()
   let optionalBoolValue = RealmOptional<Bool>(true)
   let optionalIntValue = RealmOptional<Int>(0)
   let optionalDoubleValue = RealmOptional<Double>(0)
   let optionalFloatValue = RealmOptional<Float>(0)
-  dynamic var optionalStringValue: String? = ""
-  dynamic var optionalDateValue: NSDate? = NSDate()
-  dynamic var optionalDataValue: NSData? = NSData()
+  @objc dynamic var optionalStringValue: String? = ""
+  @objc dynamic var optionalDateValue: NSDate? = NSDate()
+  @objc dynamic var optionalDataValue: NSData? = NSData()
   
-  var child: Child?
+  @objc dynamic var child: Child?
   let children = List<Child>()
   
   override class func primaryKey() -> String? {

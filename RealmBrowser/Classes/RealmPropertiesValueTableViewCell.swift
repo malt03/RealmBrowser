@@ -32,7 +32,7 @@ final class RealmPropertiesValueTableViewCell: UITableViewCell {
     valueTextField.isHidden = false
     valueTextField.textColor = .black
     valueTextField.attributedPlaceholder = NSAttributedString(string: "input value", attributes: [
-      NSForegroundColorAttributeName: UIColor.lightGray
+      NSAttributedStringKey.foregroundColor: UIColor.lightGray
     ])
 
     valueSwitch.isEnabled = true
@@ -74,7 +74,7 @@ final class RealmPropertiesValueTableViewCell: UITableViewCell {
     if value == nil {
       valueTextField.text = ""
       valueTextField.attributedPlaceholder = NSAttributedString(string: "nil", attributes: [
-        NSForegroundColorAttributeName: UIColor.red.withAlphaComponent(0.5)
+        NSAttributedStringKey.foregroundColor: UIColor.red.withAlphaComponent(0.5)
       ])
     }
   }
@@ -89,7 +89,7 @@ final class RealmPropertiesValueTableViewCell: UITableViewCell {
   
   @IBAction func valueDidChange(_ sender: UITextField) {
     valueTextField.attributedPlaceholder = NSAttributedString(string: "input value", attributes: [
-      NSForegroundColorAttributeName: UIColor.lightGray
+      NSAttributedStringKey.foregroundColor: UIColor.lightGray
     ])
     let text = sender.text ?? ""
     let value: AnyObject?
