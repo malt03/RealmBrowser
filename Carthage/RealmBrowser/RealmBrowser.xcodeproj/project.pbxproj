@@ -20,6 +20,7 @@
 		ED73046C1F5408A4003DB77C /* RealmPropertiesValueTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7304621F5408A4003DB77C /* RealmPropertiesValueTableViewCell.swift */; };
 		ED7304711F540936003DB77C /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED73046F1F540935003DB77C /* RealmSwift.framework */; };
 		ED7304721F540936003DB77C /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED7304701F540936003DB77C /* Realm.framework */; };
+		EDD850B81F55486600120CB9 /* RealmBrowser.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ED73046D1F5408AE003DB77C /* RealmBrowser.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -170,6 +171,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EDD850B81F55486600120CB9 /* RealmBrowser.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
